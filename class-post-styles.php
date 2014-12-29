@@ -690,7 +690,6 @@ class McNinja_Post_Styles {
 	 * @since 2.0
 	 *
 	 * @uses get_content_quote()
-	 * @uses apply_filters() Calls 'quote_source_style' filter to allow changing the typographical mark added to the quote source (em-dash prefix, by default)
 	 *
 	 * @param object $post (optional) A reference to the post object, falls back to get_post().
 	 * @return string The quote html.
@@ -714,6 +713,15 @@ class McNinja_Post_Styles {
 		echo get_the_post_style_quote();
 	}
 
+	/**
+	 * Outputs the post style shortcode results. 
+	 * Regex to match shortcode, if exists calls shortcode.
+	 * @param string $shortcode Name of shortcode to look for.
+	 * @param string $content Post content
+	 * @return string The shortcode html.
+	 *
+	 * @since 2.0
+	 */
 	function get_style_shortcode( $shortcode, $content ) {
 		$pattern = get_shortcode_regex();
 		if ( preg_match_all( '/'. $pattern .'/s', $content, $matches )
@@ -726,6 +734,9 @@ class McNinja_Post_Styles {
 		return false;
 	}
 
+	/**
+	 * Enqueue CSS for Post Styles metabox
+	 */
 	function enqueue() {
 		wp_enqueue_style( 'post-styles-styles', plugins_url( 'post-styles.css', __FILE__ ), array(), '122814' );
 	}
