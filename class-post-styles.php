@@ -26,6 +26,7 @@ class McNinja_Post_Styles {
 		add_filter( 'wp_get_object_terms', array( $this, '_post_style_wp_get_object_terms' ) );
 		add_filter( 'the_content', array( $this, 'style_formatting' ) );
 		add_filter( 'the_excerpt', array( $this, 'excerpt_style_formatting' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue' ) );
 		$this->add_chat_detection_style( 'IM', '#^([^:]+):#', '#[:]#' );
 		$this->add_chat_detection_style( 'Skype', '#(\[.+?\])\s([^:]+):#', '#[:]#' );
 	}
@@ -725,4 +726,7 @@ class McNinja_Post_Styles {
 		return false;
 	}
 
+	function enqueue() {
+		wp_enqueue_style( 'post-styles-styles', plugins_url( 'post-styles.css', __FILE__ ), array(), '122814' );
+	}
 }

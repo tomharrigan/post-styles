@@ -3,7 +3,7 @@ Contributors: TomHarrigan
 Tags: formatting, taxonomy, style, post formats, 
 Requires at least: 3.1
 Tested up to: 4.1
-Stable tag: 2.0.0
+Stable tag: 2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -15,11 +15,11 @@ Every post is unique, but on almost every site, they all look the same at first:
 
 McNinja Post Styles is what we always wanted Post Formats to be: powerful, flexible and extendable. Unleash the creativity of your content.
 
-Post Styles can be selected for a Post from the 'Edit Post' screen.
-
 McNinja Post Styles can display content based on the Post Style of a post. For example, if your post has a video in it and you've selected the 'Video' style, your blog page, category pages, etc. will display that video rather than an excerpt.
 
 To enable this functionality, go to Settings->Reading and select "Enable Post Style formatting."
+
+Post Styles can be selected for a Post from the 'Edit Post' screen.
 
 For more information or to follow the project, check out the [project page](http://thomasharrigan.com/mcninja-post-styles/).
 

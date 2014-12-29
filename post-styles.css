@@ -1,0 +1,142 @@
+.post-state-style {
+	overflow: hidden;
+	display: inline-block;
+	vertical-align: middle;
+	height: 20px;
+	width: 20px;
+	margin-right: 5px;
+	margin-top: -4px;
+}
+
+.post-state-style:before {
+	display: block;
+	height: 20px;
+	width: 20px;
+	font: normal 20px/1 'dashicons' !important;
+	speak: none;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.post-state-style:before,
+.post-style-icon:before {
+	color: #ddd;
+	-webkit-transition: all .1s ease-in-out;
+	transition: all .1s ease-in-out;
+}
+
+a.post-state-style:hover:before,
+a.post-style-icon:hover:before {
+	color: #2ea2cc;
+}
+
+#post-styles-select {
+	line-height: 2em;
+}
+
+#post-styles-select .post-style-icon:before {
+	top: 5px;
+}
+
+input.post-style {
+	margin-top: 1px;
+}
+
+label.post-style-icon {
+	margin-left: 0px;
+	padding: 2px 0 2px 0px;
+}
+
+.post-style-icon:before {
+	position: relative;
+	display: inline-block;
+	margin-right: 7px;
+	font: normal 20px/1 'dashicons';
+	speak: none;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.post-state-style.post-style-standard:before,
+.post-style-icon.post-style-standard:before,
+a.post-state-style.style-standard:before {
+	content: '\f109';
+}
+
+.post-state-style.post-style-image:before,
+.post-style-icon.post-style-image:before,
+a.post-state-style.style-image:before {
+	content: '\f128';
+}
+
+.post-state-style.post-style-gallery:before,
+.post-style-icon.post-style-gallery:before,
+a.post-state-style.style-gallery:before {
+	content: '\f161';
+}
+
+.post-state-style.post-style-audio:before,
+.post-style-icon.post-style-audio:before,
+a.post-state-style.style-audio:before {
+	content: '\f127';
+}
+
+.post-state-style.post-style-video:before,
+.post-style-icon.post-style-video:before,
+a.post-state-style.style-video:before {
+	content: '\f126';
+}
+
+.post-state-style.post-style-chat:before,
+.post-style-icon.post-style-chat:before,
+a.post-state-style.style-chat:before {
+	content: '\f125';
+}
+
+.post-state-style.post-style-status:before,
+.post-style-icon.post-style-status:before,
+a.post-state-style.style-status:before {
+	content: '\f130';
+}
+
+.post-state-style.post-style-aside:before,
+.post-style-icon.post-style-aside:before,
+a.post-state-style.style-aside:before {
+	content: '\f123';
+}
+
+.post-state-style.post-style-quote:before,
+.post-style-icon.post-style-quote:before,
+a.post-state-style.style-quote:before {
+	content: '\f122';
+}
+
+.post-state-style.post-style-link:before,
+.post-style-icon.post-style-link:before,
+a.post-state-style.style-link:before {
+	content: '\f103';
+}
+
+.post-state-style.post-style-playlist:before,
+.post-style-icon.post-style-playlist:before,
+a.post-state-style.style-playlist:before {
+	content: '\f492';
+}
+
+.post-state-style.post-style-link-list:before,
+.post-style-icon.post-style-link-list:before,
+a.post-state-style.style-link-list:before {
+	content: '\f214';
+}
+
+.post-state-style.post-style-embed:before,
+.post-style-icon.post-style-embed:before,
+a.post-state-style.style-embed:before {
+	content: '\f236';
+}
+
+.post-state-style.post-style-no-photo:before,
+.post-style-icon.post-style-no-photo:before,
+a.post-state-style.style-no-photo:before {
+	content: '\f335';
+}
