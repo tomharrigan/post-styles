@@ -24,7 +24,7 @@ class McNinja_Post_Styles {
 		add_filter( 'get_terms', array( $this, '_post_style_get_terms' ), 10, 3 );
 		add_filter( 'wp_get_object_terms', array( $this, '_post_style_wp_get_object_terms' ) );
 		add_filter( 'the_content', array( $this, 'style_formatting' ) );
-		//add_filter( 'the_excerpt', array( $this, 'style_formatting' ) );
+		add_filter( 'the_excerpt', array( $this, 'excerpt_style_formatting' ) );
 		$this->add_chat_detection_format( 'IM', '#^([^:]+):#', '#[:]#' );
 		$this->add_chat_detection_format( 'Skype', '#(\[.+?\])\s([^:]+):#', '#[:]#' );
 	}
@@ -47,7 +47,7 @@ class McNinja_Post_Styles {
 		global $post;
 		if ( post_type_supports( $post->post_type, 'post-styles' ) ) {
 			$post_style = $this->get_post_style( $post );
-			if( !is_single() ) {
+			if( ! is_single() ) {
 				if ( $post_style && ! is_wp_error( $post_style )  ) {
 					$classes[] = 'post-style-' . sanitize_html_class( $post_style );
 					$classes[] = 'post-format-' . sanitize_html_class( $post_style );
@@ -110,10 +110,10 @@ class McNinja_Post_Styles {
 		if ( is_array( $post_styles ) ) :
 			$post_style =  $this->get_post_style( $post->ID );
 
-			if ( !$post_style )
+			if ( ! $post_style )
 				$post_style = '0';
 			// Add in the current one if it isn't there yet, in case the current theme doesn't support it
-			if ( $post_style && !in_array( $post_style, $post_styles ) )
+			if ( $post_style && ! in_array( $post_style, $post_styles ) )
 				$post_style = '0';
 		?>
 		<div id="post-styles-select">
@@ -232,6 +232,7 @@ class McNinja_Post_Styles {
 			'image' => _x( 'Image', 'Post style' ),
 			'video' => _x( 'Video', 'Post style' ),
 			'audio' => _x( 'Audio', 'Post style' ),
+			'playlist' => _x( 'Playlist', 'Post style' ),
 			'quote' => _x( 'Quote', 'Post style' ),
 			'link' => _x( 'Link', 'Post style' ),
 			'link-list' => _x( 'List', 'Post style' ),
@@ -278,7 +279,7 @@ class McNinja_Post_Styles {
 	 * @return string The post style term link.
 	 */
 	public function get_post_style_link( $style ) {
-		$term = get_term_by('slug', 'post-style-' . $style, 'post_style' );
+		$term = get_term_by( 'slug', 'post-style-' . $style, 'post_style' );
 		if ( ! $term || is_wp_error( $term ) )
 			return false;
 		return get_term_link( $term );
@@ -366,6 +367,19 @@ class McNinja_Post_Styles {
 		return $terms;
 	}
 
+	function excerpt_style_formatting( $excerpt ) {
+		global $post;
+		if( $this->has_post_style() && !is_single() ) {
+			
+
+			$excerpt = $this->style_formatting( $post->post_content );
+
+			//print_r('excerpt: ' . $excerpt);
+			return do_shortcode( $excerpt );
+		}
+		return $excerpt;
+	}
+
 	function style_formatting( $content ) {
 
 		if( ( ! is_single() ) && apply_filters( 'post_style_formatting', true ) ) {
@@ -374,66 +388,59 @@ class McNinja_Post_Styles {
 
 			switch ( $style ) {
 				case 'chat':
-					$content = get_the_post_format_chat( $content );
+					$content = $this->get_the_post_format_chat( $content );
 					break;
 				case 'quote':
-					$content = get_content_quote( $content );
+					$content = $this->get_content_quote( $content );
 					break;
 				case 'link-list':
-					preg_match_all('/(\<(ul|ol).*\<\/(ul|ol)\>)/is', get_the_content(), $matches);
+					preg_match_all( '/(\<(ul|ol).*\<\/(ul|ol)\>)/is', get_the_content(), $matches );
 					$content = $matches[1][0];
 					break;
 				case 'gallery':
 					$galleries = get_post_galleries( get_the_ID() );
-
 					if ( isset( $galleries[0] ) ) {
 						$content = $galleries[0];
 					}
 					break;
 				case 'playlist':
-					$content = $this->get_style_shortcode_regex( 'playlist', $content );
+					$content= $this->get_style_shortcode( 'playlist', $content );
 					break;
 				case 'audio':
-					$audio = $this->get_style_shortcode_regex( 'audio', $content );
+					$audio = $this->get_style_shortcode( 'audio', $content );
 					if( $audio ) {
 						$content = $audio;
 						break;
 					}
 				case 'video':
-					$video = $this->get_style_shortcode_regex( 'video', $content );
+					$video = $this->get_style_shortcode( 'video', $content );
 					if( $video ) {
 						$content = $video;
 						break;
 					}
 				case 'embed':
 					$meta = get_post_custom();
-
-				    foreach ($meta as $key => $value){
-				        if (false !== strpos($key, 'oembed'))
+				    foreach( $meta as $key => $value ){
+				        if( false !== strpos( $key, 'oembed' ) )
 				            return $value[0];
 				    }
-					$output = preg_match_all('/(\<iframe.*\<\/iframe\>)/is', get_the_content(), $matches);
+					$output = preg_match_all( '/(\<iframe.*\<\/iframe\>)/is', get_the_content(), $matches );
 
-					if(!empty($matches [1] [0]))
-						$content = $matches [1] [0];
+					if( ! empty($matches[1][0] ) )
+						$content = $matches[1][0];
 					break;
 				case 'link':
-					preg_match_all('/(\<a[^\>]*\>[^\<]*\<\/a\>)/is', get_the_content(), $matches);
-					if(!empty($matches [1] [0]))
-						$content = $matches [1] [0];
+					preg_match_all( '/(\<a[^\>]*\>[^\<]*\<\/a\>)/is', get_the_content(), $matches );
+					if( ! empty( $matches[1][0] ) )
+						$content = $matches[1][0];
 					break;
 				case 'no-photo':
 				case 'aside':
 				default:
-					//return $content;
 					break;
 			}
-
-
+			return apply_filters( 'post_style_content_formatting', $content );
 		}
-
-		return apply_filters( 'post_style_content_formatting', $content );
-
 	}
 
 	/**
@@ -660,7 +667,7 @@ class McNinja_Post_Styles {
 		if ( empty( $content ) )
 			return '';
 
-		if ( ! preg_match( '/<blockquote[^>]*>(.+?)<\/blockquote>/is', $content, $matches ) ) {
+		if ( ! preg_match( '/(<blockquote[^>]*>.+?<\/blockquote>)/is', $content, $matches ) ) {
 			return $content;
 		}
 
@@ -679,10 +686,10 @@ class McNinja_Post_Styles {
 	 * @return string The quote html.
 	 */
 	function get_the_post_format_quote( $content ) {
-		$quote = get_content_quote( $content, true );
+		$quote = $this->get_content_quote( $content, true );
 
 		if ( ! empty( $quote ) ) {
-			$quote = sprintf( '<figure class="quote"><blockquote>%s</blockquote></figure>', wpautop( $quote ) );
+			$quote = sprintf( '<figure class="quote">%s</figure>', wpautop( $quote ) );
 		}
 
 		return $quote;
@@ -697,13 +704,14 @@ class McNinja_Post_Styles {
 		echo get_the_post_format_quote();
 	}
 
-	function get_style_shortcode_regex( $shortcode, $content ) {
+	function get_style_shortcode( $shortcode, $content ) {
 		$pattern = get_shortcode_regex();
 		if ( preg_match_all( '/'. $pattern .'/s', $content, $matches )
 			&& array_key_exists( 2, $matches )
         	&& in_array( $shortcode, $matches[2] ) ) {
-	        // shortcode is being used
-	        return call_user_func( 'wp_' . $shortcode . '_shortcode', $matches[3] );
+
+			$atts = shortcode_parse_atts($matches[3][0]);
+	    	return call_user_func( 'wp_' . $shortcode . '_shortcode', $atts );
 	    }
 		return false;
 	}
