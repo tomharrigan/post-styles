@@ -3,14 +3,14 @@
  * McNinja Post Styles
  *
  * @package   McNinja_Post_Styles
- * @author    Tom Harrigan <tom29axp@gmail.com>
+ * @author    TomHarrigan
  * @license   GPL-2.0+
  * @link      http://thomasharrigan.com/mcninja-post-styles
  *
  * @wordpress-plugin
  * Plugin Name: McNinja Post Styles
- * Version: 1.1
- * Author: Tom Harrigan
+ * Version: 2.0
+ * Author: TomHarrigan
  * Plugin URI:  http://thomasharrigan.com/mcninja-post-styles
  * Description: Unleash the creativity of your content with custom post formats.
  * Author URI:  http://thomasharrigan.com

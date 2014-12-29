@@ -3,7 +3,7 @@
  * Post Styles
  *
  * @package   McNinja_Post_Styles
- * @author    Tom Harrigan <tom29axp@gmail.com>
+ * @author    TomHarrigan
  * @license   GPL-2.0+
  * @link      http://thomasharrigan.com/mcninja-post-styles
  */
