@@ -7,22 +7,26 @@ Stable tag: 2.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Unleash the creativity of your content
+Every post is unique, start treating them that way.
 
 == Description ==
 
-McNinja Post Styles is what we always wanted Post Formats to be, flexible and extendable. Unleash the creativity of your content.
+Every post is unique, but on almost every site, they all look the same at first: A title, an excerpt and a featured image. Why not display the most important part of your posts to readers and actually give them a reason to click on your post a read it? That's what this plugin does.
+
+McNinja Post Styles is what we always wanted Post Formats to be: powerful, flexible and extendable. Unleash the creativity of your content.
+
+Post Styles can be selected for a Post from the 'Edit Post' screen.
+
+McNinja Post Styles can display content based on the Post Style of a post. For example, if your post has a video in it and you've selected the 'Video' style, your blog page, category pages, etc. will display that video rather than an excerpt.
+
+To enable this functionality, go to Settings->Reading and select "Enable Post Style formatting."
+
+For more information or to follow the project, check out the [project page](http://thomasharrigan.com/mcninja-post-styles/).
 
 McNinja Post Styles...
 
-* Creates a Post Style taxonomy, allowing authors to choose how to display a Post
+* Allows authors to choose how to display a Post
 * Supports all of the formats added by Post Formats (aside, gallery, link, image, quote, status, video, audio, chat) so that if your theme made use of Post Formats, the same templates can be used.
-* Provides a filter hook so that you can add/create your own Post Styles (formats). Why be limited to what's provided in WP Core? 
-* Provides a metabox on the Post Edit screen to easily choose the desired style.
-
-Does not include content templates.
-
-For more information or to follow the project, check out the [project page](http://thomasharrigan.com/mcninja-post-styles/).
 
 == Installation ==
 
@@ -42,6 +46,10 @@ For more information or to follow the project, check out the [project page](http
 == Frequently Asked Questions ==
 
 = How do I make use of Post Styles? =
+
+Simply go to Settings->Reading and select "Enable Post Style formatting", save your changes, and you're ready to roll!
+
+= How do I use Post Styles to display custom theme templates I've created? =
 
 In your loop or other area in which displaying a content template, change your get_template_part call to the following:
 
@@ -80,8 +88,10 @@ This plugin provides the mechanism for allowing custom post formats. It is basic
 
 = 2.0 =
 * Add content formatting based on Post Style
+* Add option in Settings -> Reading to enable Post Style formatting
 * Add "Embed" Post Style
 * Add "Chat" Post Style
+* Add "Playlist" Post Style
 
 = 1.1 =
 * Expose get_post_style_link() function
