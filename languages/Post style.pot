@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: McNinja Post Styles\n"
-"POT-Creation-Date: 2014-09-12 11:40-0500\n"
-"PO-Revision-Date: 2014-09-12 11:40-0500\n"
+"POT-Creation-Date: 2014-12-28 23:53-0500\n"
+"PO-Revision-Date: 2014-12-28 23:55-0500\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en\n"
@@ -18,61 +18,91 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: class-post-styles.php:75 class-post-styles.php:76 class-post-styles.php:88
+#: class-post-styles.php:59
+msgid "Enable Post Style formatting"
+msgstr ""
+
+#: class-post-styles.php:69
+msgid "Format and display your posts with style"
+msgstr ""
+
+#: class-post-styles.php:69
+msgid ""
+"(On non-single post pages, your posts will display content based on the "
+"chosen Post Style for that post.)"
+msgstr ""
+
+#: class-post-styles.php:106 class-post-styles.php:107
+#: class-post-styles.php:119
 msgctxt "Post style"
 msgid "Post Style"
 msgstr ""
 
-#: class-post-styles.php:207
+#: class-post-styles.php:238
 msgid "Invalid post"
 msgstr ""
 
-#: class-post-styles.php:227
+#: class-post-styles.php:258
 msgctxt "Post style"
 msgid "Aside"
 msgstr ""
 
-#: class-post-styles.php:228
+#: class-post-styles.php:259
 msgctxt "Post style"
 msgid "Image"
 msgstr ""
 
-#: class-post-styles.php:229
+#: class-post-styles.php:260
 msgctxt "Post style"
 msgid "Video"
 msgstr ""
 
-#: class-post-styles.php:230
+#: class-post-styles.php:261
 msgctxt "Post style"
 msgid "Audio"
 msgstr ""
 
-#: class-post-styles.php:231
+#: class-post-styles.php:262
+msgctxt "Post style"
+msgid "Playlist"
+msgstr ""
+
+#: class-post-styles.php:263
 msgctxt "Post style"
 msgid "Quote"
 msgstr ""
 
-#: class-post-styles.php:232
+#: class-post-styles.php:264
 msgctxt "Post style"
 msgid "Link"
 msgstr ""
 
-#: class-post-styles.php:233
+#: class-post-styles.php:265
 msgctxt "Post style"
-msgid "List of Links"
+msgid "List"
 msgstr ""
 
-#: class-post-styles.php:234
+#: class-post-styles.php:266
 msgctxt "Post style"
 msgid "Gallery"
 msgstr ""
 
-#: class-post-styles.php:235
+#: class-post-styles.php:267
+msgctxt "Post style"
+msgid "Embed"
+msgstr ""
+
+#: class-post-styles.php:268
 msgctxt "Post style"
 msgid "No Photo"
 msgstr ""
 
-#: class-post-styles.php:238
+#: class-post-styles.php:269
+msgctxt "Post style"
+msgid "Chat"
+msgstr ""
+
+#: class-post-styles.php:272
 msgctxt "Post style"
 msgid "Standard"
 msgstr ""
