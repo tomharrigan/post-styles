@@ -464,7 +464,7 @@ class McNinja_Post_Styles {
 				default:
 					break;
 			}
-			return apply_filters( 'post_style_content_formatting', $content );
+			return apply_filters( 'post_style_content_formatting', $content, $style );
 		}
 
 		return $content;
@@ -473,7 +473,7 @@ class McNinja_Post_Styles {
 	/**
 	 * Add chat detection support to the `get_content_chat()` chat parser.
 	 *
-	 * @since 3.6.0
+	 * @since 2.0
 	 *
 	 * @global array $_wp_chat_parsers
 	 *
@@ -525,7 +525,7 @@ class McNinja_Post_Styles {
 	 *     )
 	 * )
 	 *
-	 * @since 3.6.0
+	 * @since 2.0
 	 *
 	 * @param string $content A string which might contain chat data, passed by reference.
 	 * @return array A chat log as structured data
@@ -666,7 +666,7 @@ class McNinja_Post_Styles {
 	 * If $content does not have a blockquote, assume the whole string
 	 * is the quote.
 	 *
-	 * @since 3.6.0
+	 * @since 2.0
 	 *
 	 * @param string $content A string which might contain chat data, passed by reference.
 	 * @param string $replace (optional) Content to replace the quote content with.
@@ -686,7 +686,7 @@ class McNinja_Post_Styles {
 	/**
 	 * Get a quote from the post content.
 	 *
-	 * @since 3.6.0
+	 * @since 2.0
 	 *
 	 * @uses get_content_quote()
 	 * @uses apply_filters() Calls 'quote_source_style' filter to allow changing the typographical mark added to the quote source (em-dash prefix, by default)
