@@ -14,6 +14,7 @@ class McNinja_Post_Styles {
 	public function __construct() {
 		add_post_type_support( 'post', 'post-styles' );
 		add_action( 'init', array( $this, 'create_style_taxonomies' ), 0 );
+		add_action( 'admin_init', array( $this, 'settings_api_init' ) );
 		add_action( 'after_setup_theme', array( $this, 'load_plugin_textdomain' ) );
 		add_filter( 'post_class', array( $this, 'my_class_names' ) );
 		add_action( 'add_meta_boxes', array( $this, 'stylesbox' ) );
@@ -31,6 +32,8 @@ class McNinja_Post_Styles {
 
 	protected static $instance = null;
 
+	static $option_name_enabled = 'mcninja_post_styles';
+
 	public static function get_instance() {
 
 		// If the single instance hasn't been set, set it now.
@@ -41,8 +44,31 @@ class McNinja_Post_Styles {
 		return self::$instance;
 	}
     
-	// Add specific CSS class by filter
+    /**
+	 * Add a checkbox field to Settings > Reading
+	 * for enabling Post Style formatting.
+	 *
+	 * @uses add_settings_field, __, register_setting
+	 * @action admin_init
+	 * @return null
+	 */
+	function settings_api_init() {
 
+		// Add the setting field [mcninja-post-styles] and place it in Settings > Reading
+		add_settings_field( self::$option_name_enabled, '<span id="infinite-transporter-options">' . __( 'Enable Post Style formatting', 'Post style' ) . '</span>', array( $this, 'mcninja_post_styles_setting_html' ), 'reading' );
+		register_setting( 'reading', self::$option_name_enabled, 'esc_attr' );
+	}
+
+	/**
+	 * HTML code to display a checkbox true/false option
+	 * for the mcninja_post_styles setting.
+	 */
+	function mcninja_post_styles_setting_html() {
+
+		echo '<label><input name="mcninja_post_styles" type="checkbox" value="1" ' . checked( 1, get_option( self::$option_name_enabled ), false ) . ' /> ' . __( 'Format and display your posts with style', 'jetpack' ) . '</br><small>' . sprintf( __( '(On non-single post pages, your posts will display content based on the chosen Post Style for that post.)', 'Post style' ) ) . '</small>' . '</label>';
+	}
+
+	// Add specific CSS class by filter
 	public function my_class_names($classes) {
 		global $post;
 		if ( post_type_supports( $post->post_type, 'post-styles' ) ) {
@@ -369,7 +395,8 @@ class McNinja_Post_Styles {
 
 	function excerpt_style_formatting( $excerpt ) {
 		global $post;
-		if( $this->has_post_style() && !is_single() ) {
+		$enabled = get_option( self::$option_name_enabled ) ? true : false;
+		if( $this->has_post_style() && !is_single() && apply_filters( 'post_style_formatting', $enabled )) {
 			$excerpt = $this->style_formatting( $post->post_content );
 			return do_shortcode( $excerpt );
 		}
@@ -378,7 +405,9 @@ class McNinja_Post_Styles {
 
 	function style_formatting( $content ) {
 
-		if( ( ! is_single() ) && apply_filters( 'post_style_formatting', true ) ) {
+		$enabled = get_option( self::$option_name_enabled ) ? true : false;
+
+		if( ( ! is_single() ) && apply_filters( 'post_style_formatting', $enabled ) ) {
 
 			$style = get_post_style();
 
@@ -437,6 +466,8 @@ class McNinja_Post_Styles {
 			}
 			return apply_filters( 'post_style_content_formatting', $content );
 		}
+
+		return $content;
 	}
 
 	/**
