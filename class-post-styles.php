@@ -25,8 +25,8 @@ class McNinja_Post_Styles {
 		add_filter( 'wp_get_object_terms', array( $this, '_post_style_wp_get_object_terms' ) );
 		add_filter( 'the_content', array( $this, 'style_formatting' ) );
 		add_filter( 'the_excerpt', array( $this, 'excerpt_style_formatting' ) );
-		$this->add_chat_detection_format( 'IM', '#^([^:]+):#', '#[:]#' );
-		$this->add_chat_detection_format( 'Skype', '#(\[.+?\])\s([^:]+):#', '#[:]#' );
+		$this->add_chat_detection_style( 'IM', '#^([^:]+):#', '#[:]#' );
+		$this->add_chat_detection_style( 'Skype', '#(\[.+?\])\s([^:]+):#', '#[:]#' );
 	}
 
 	protected static $instance = null;
@@ -370,11 +370,7 @@ class McNinja_Post_Styles {
 	function excerpt_style_formatting( $excerpt ) {
 		global $post;
 		if( $this->has_post_style() && !is_single() ) {
-			
-
 			$excerpt = $this->style_formatting( $post->post_content );
-
-			//print_r('excerpt: ' . $excerpt);
 			return do_shortcode( $excerpt );
 		}
 		return $excerpt;
@@ -388,7 +384,7 @@ class McNinja_Post_Styles {
 
 			switch ( $style ) {
 				case 'chat':
-					$content = $this->get_the_post_format_chat( $content );
+					$content = $this->get_the_post_style_chat( $content );
 					break;
 				case 'quote':
 					$content = $this->get_content_quote( $content );
@@ -450,7 +446,7 @@ class McNinja_Post_Styles {
 	 *
 	 * @global array $_wp_chat_parsers
 	 *
-	 * @param string $name Unique identifier for chat format. Example: IRC
+	 * @param string $name Unique identifier for chat style. Example: IRC
 	 * @param string $newline_regex RegEx to match the start of a new line, typically when a new "username:" appears
 	 *	The parser will handle up to 3 matched expressions
 	 *	$matches[0] = the string before the user's message starts
@@ -461,7 +457,7 @@ class McNinja_Post_Styles {
 	 *	$matches[1] = the author/username
 	 * @param string $delimiter_regex RegEx to determine where to split the username syntax from the chat message
 	 */
-	function add_chat_detection_format( $name, $newline_regex, $delimiter_regex ) {
+	function add_chat_detection_style( $name, $newline_regex, $delimiter_regex ) {
 		global $_wp_chat_parsers;
 
 		if ( empty( $_wp_chat_parsers ) )
@@ -598,36 +594,18 @@ class McNinja_Post_Styles {
 	}
 
 	/**
-	 * Retrieve structured chat data from the current or passed post
-	 *
-	 * @since 3.6.0
-	 *
-	 * @param int $id (optional) The post ID.
-	 * @return array The chat content.
-	 */
-	function get_the_post_format_chat( $content ) {
-
-		$data = get_content_chat( get_paged_content( $content ) );
-		if ( empty( $data ) )
-			return array();
-
-		return $data;
-	}
-
-	/**
 	 * Output HTML for a given chat's structured data. Themes can use this as a
-	 * template tag in place of the_content() for Chat post format templates.
+	 * template tag in place of the_content() for Chat post style templates.
 	 *
-	 * @since 3.6.0
+	 * @since 2.0
 	 *
-	 * @uses get_the_post_format_chat()
-	 *
-	 * @print HTML
+	 * @return HTML
 	 */
-	function the_post_format_chat() {
+	function get_the_post_style_chat( $content ) {
 		$output  = '<dl class="chat">';
-		$stanzas = get_the_post_format_chat();
-
+		$stanzas = $this->get_content_chat( $content );
+		if ( empty( $stanzas ) )
+			return array();
 		foreach ( $stanzas as $stanza ) {
 			foreach ( $stanza as $row ) {
 				$time = '';
@@ -648,7 +626,7 @@ class McNinja_Post_Styles {
 
 		$output .= '</dl><!-- .chat -->';
 
-		echo $output;
+		return $output;
 	}
 
 	/**
@@ -680,12 +658,12 @@ class McNinja_Post_Styles {
 	 * @since 3.6.0
 	 *
 	 * @uses get_content_quote()
-	 * @uses apply_filters() Calls 'quote_source_format' filter to allow changing the typographical mark added to the quote source (em-dash prefix, by default)
+	 * @uses apply_filters() Calls 'quote_source_style' filter to allow changing the typographical mark added to the quote source (em-dash prefix, by default)
 	 *
 	 * @param object $post (optional) A reference to the post object, falls back to get_post().
 	 * @return string The quote html.
 	 */
-	function get_the_post_format_quote( $content ) {
+	function get_the_post_style_quote( $content ) {
 		$quote = $this->get_content_quote( $content, true );
 
 		if ( ! empty( $quote ) ) {
@@ -696,12 +674,12 @@ class McNinja_Post_Styles {
 	}
 
 	/**
-	 * Outputs the post format quote.
+	 * Outputs the post style quote.
 	 *
-	 * @since 3.6.0
+	 * @since 2.0
 	 */
-	function the_post_format_quote() {
-		echo get_the_post_format_quote();
+	function the_post_style_quote() {
+		echo get_the_post_style_quote();
 	}
 
 	function get_style_shortcode( $shortcode, $content ) {
